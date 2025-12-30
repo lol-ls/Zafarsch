@@ -51,7 +51,7 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      padding: 20px;
+      padding: 12px; /* Reduced padding for mobile to let the card grow */
       position: relative;
       z-index: 1;
     }
@@ -61,29 +61,29 @@
       max-width: 640px;
       border: 1px solid var(--line);
       background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 28px;
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-radius: 32px;
       box-shadow: 0 40px 100px -20px var(--shadow);
       position: relative;
       overflow: hidden;
     }
 
     header{
-      padding: 32px 28px;
+      padding: 40px 24px 32px; /* Increased top padding */
     }
 
     .mark{
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 24px;
     }
 
     .badge{
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.05);
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.07);
       border: 1px solid var(--line);
       display: flex;
       align-items: center;
@@ -91,22 +91,22 @@
     }
 
     h1{
-      font-size: clamp(22px, 6vw, 28px);
+      font-size: clamp(26px, 8vw, 32px); /* Larger, more prominent heading on mobile */
       font-weight: 800;
       letter-spacing: -0.01em;
-      line-height: 1.4;
-      margin-bottom: 12px;
+      line-height: 1.3;
+      margin-bottom: 16px;
     }
 
     .subtitle{
       color: var(--muted);
-      font-size: 15px;
+      font-size: clamp(16px, 4vw, 18px); /* More readable subtitle */
       line-height: 1.8;
     }
 
     .big{
       display: block;
-      margin-top: 8px;
+      margin-top: 10px;
       color: var(--accent);
       font-weight: 600;
     }
@@ -117,20 +117,21 @@
     }
 
     main{
-      padding: 28px;
+      padding: 32px 24px;
     }
 
     .quote{
-      background: rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.3);
       border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 24px;
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 32px;
     }
 
     .quote p{
       color: var(--muted);
-      font-size: 14px;
+      font-size: 16px; /* Standard readable size */
+      line-height: 1.9;
       text-align: justify;
     }
 
@@ -140,43 +141,43 @@
       align-items: center;
       margin-bottom: 24px;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
     }
 
     .chips{
       display: flex;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
     .chip{
       background: rgba(255,255,255,0.04);
       border: 1px solid var(--line);
-      padding: 4px 12px;
+      padding: 6px 14px;
       border-radius: 100px;
-      font-size: 12px;
+      font-size: 13px;
       color: var(--muted2);
     }
 
     .chip.status {
       color: #ffb4b4;
-      background: rgba(255, 100, 100, 0.08);
-      border-color: rgba(255, 100, 100, 0.15);
+      background: rgba(255, 100, 100, 0.1);
+      border-color: rgba(255, 100, 100, 0.2);
     }
 
     .actions{
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 14px;
     }
 
     .btn{
-      height: 52px;
+      height: 56px; /* Better touch target */
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.06);
       color: var(--fg);
-      border-radius: 16px;
-      font-size: 14px;
+      border-radius: 18px;
+      font-size: 15px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -186,8 +187,8 @@
     }
 
     .btn:active {
-      transform: scale(0.97);
-      background: rgba(255,255,255,0.1);
+      transform: scale(0.96);
+      background: rgba(255,255,255,0.12);
     }
 
     .btn.secondary{
@@ -196,25 +197,27 @@
     }
 
     footer{
-      padding: 0 28px 28px;
-      font-size: 12px;
+      padding: 0 24px 32px;
+      font-size: 13px;
       color: var(--muted2);
       text-align: center;
+      line-height: 1.7;
     }
 
-    /* بهینه‌سازی برای موبایل‌های بسیار کوچک */
-    @media (max-width: 380px) {
-      header, main { padding: 20px; }
-      .actions { grid-template-columns: 1fr; }
-      .badge { width: 40px; height: 40px; }
+    /* اختصاصی برای موبایل‌های باریک */
+    @media (max-width: 420px) {
+      .wrap { padding: 8px; }
+      .card { border-radius: 24px; }
+      header, main { padding: 32px 20px; }
+      .actions { grid-template-columns: 1fr; } /* Stack buttons on very small screens */
+      .badge { width: 48px; height: 48px; }
     }
 
-    /* انیمیشن اسکن لاین برای حس مدرن */
     .scanline {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 2px;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      animation: scan 4s linear infinite;
+      animation: scan 5s linear infinite;
       z-index: 5;
     }
 
@@ -234,7 +237,7 @@
       <header>
         <div class="mark">
           <div class="badge">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
               <line x1="12" y1="9" x2="12" y2="13"></line>
               <line x1="12" y1="17" x2="12.01" y2="17"></line>
@@ -284,29 +287,27 @@
   </div>
 
   <script>
-    // بروزرسانی زمان
     function updateTime() {
       const now = new Date();
       const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-      document.getElementById('timeChip').textContent = timeStr;
+      const el = document.getElementById('timeChip');
+      if(el) el.textContent = timeStr;
     }
     updateTime();
     setInterval(updateTime, 30000);
 
-    // کپی متن
     const copyBtn = document.getElementById('copyBtn');
     copyBtn.addEventListener('click', async () => {
       const text = "فعلاً با توجه به شرایط، از دسترس خارج شد. به امید روزای بهتر.";
       try {
         await navigator.clipboard.writeText(text);
         copyBtn.textContent = "کپی شد ✓";
-        copyBtn.style.background = "rgba(100, 255, 100, 0.1)";
+        copyBtn.style.borderColor = "rgba(100, 255, 100, 0.3)";
         setTimeout(() => {
           copyBtn.textContent = "کپی پیام";
-          copyBtn.style.background = "";
+          copyBtn.style.borderColor = "";
         }, 2000);
       } catch (err) {
-        // Fallback
         const textArea = document.createElement("textarea");
         textArea.value = text;
         document.body.appendChild(textArea);
@@ -318,9 +319,8 @@
       }
     });
 
-    // رفرش
     document.getElementById('refreshBtn').addEventListener('click', () => {
-      document.getElementById('refreshBtn').textContent = "...";
+      document.getElementById('refreshBtn').textContent = "صبر کنید...";
       setTimeout(() => location.reload(), 600);
     });
   </script>
