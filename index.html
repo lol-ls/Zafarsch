@@ -2,390 +2,326 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <!-- viewport adjustment for better mobile scaling -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <meta name="color-scheme" content="dark" />
   <meta name="theme-color" content="#0b0b10" />
   <title>فعلاً از دسترس خارج شد</title>
+  <!-- لود فونت وزیر برای نمایش بهتر متن فارسی -->
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
   <style>
     :root{
       --bg:#0b0b10;
       --fg:#f5f6ff;
       --muted:rgba(245,246,255,.72);
       --muted2:rgba(245,246,255,.55);
-      --line:rgba(245,246,255,.14);
+      --line:rgba(245,246,255,.12);
       --shadow:rgba(0,0,0,.6);
-      --accent:rgba(245,246,255,.92);
+      --accent:#ffffff;
+      --card-bg: linear-gradient(180deg, rgba(255,255,255,.05) 0%, rgba(255,255,255,.02) 100%);
     }
-    *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+
+    *{box-sizing:border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0;}
     
     html, body {
       height: 100%;
-      overscroll-behavior-y: none; /* Prevents pull-to-refresh effect on some mobiles */
+      overscroll-behavior-y: contain;
     }
 
     body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Vazirmatn", "Noto Sans Arabic", Arial, sans-serif;
-      background: radial-gradient(1200px 800px at 70% 20%, rgba(255,255,255,.06), transparent 60%),
-                  radial-gradient(900px 600px at 20% 70%, rgba(255,255,255,.04), transparent 65%),
-                  var(--bg);
+      font-family: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+      background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.08), transparent 50%), var(--bg);
       color:var(--fg);
       overflow-x:hidden;
-      font-size: 16px; /* Base size for mobile readability */
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* Subtle grain - reduced opacity for mobile performance */
     .grain{
       pointer-events:none;
       position:fixed;
-      inset:-40%;
-      opacity:.06;
-      background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="160" height="160" filter="url(%23n)" opacity="0.6"/></svg>');
-      transform:rotate(2deg);
-      mix-blend-mode:overlay;
-      z-index: 0;
+      inset:0;
+      opacity:.03;
+      background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23n)"/></svg>');
+      z-index: 10;
     }
 
     .wrap{
-      min-height: 100%;
-      min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+      flex: 1;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding: 16px; /* Reduced outer padding for mobile */
+      padding: 20px;
       position: relative;
       z-index: 1;
     }
 
     .card{
-      width:min(820px, 100%);
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      backdrop-filter: blur(10px); /* Adds depth on supported devices */
-      -webkit-backdrop-filter: blur(10px);
-      border-radius:24px;
-      box-shadow: 0 24px 60px var(--shadow);
-      position:relative;
-      overflow:hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:-1px;
-      background: radial-gradient(600px 220px at 50% -10%, rgba(255,255,255,.10), transparent 65%);
-      pointer-events:none;
+      width: 100%;
+      max-width: 640px;
+      border: 1px solid var(--line);
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 28px;
+      box-shadow: 0 40px 100px -20px var(--shadow);
+      position: relative;
+      overflow: hidden;
     }
 
     header{
-      padding:24px;
-      display:flex;
-      flex-wrap: wrap; /* Allow wrapping on small screens */
-      gap:16px;
-      align-items:flex-start;
-      justify-content:space-between;
+      padding: 32px 28px;
     }
 
     .mark{
-      display:flex;
-      gap:14px;
-      align-items:flex-start;
-      flex: 1 1 300px; /* Allow growing/shrinking properly */
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
     .badge{
-      width:44px; /* Slightly larger touch target visual */
-      height:44px;
-      flex-shrink: 0; /* Prevent squashing */
-      border-radius:14px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      display:grid;
-      place-items:center;
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-    }
-
-    .title{
-      flex: 1;
-      min-width: 0; /* Prevents flex overflow */
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     h1{
-      margin:0;
-      font-size: clamp(20px, 5vw, 32px); /* Adjusted clamp */
-      letter-spacing:-.02em;
-      line-height:1.3;
-      font-weight: 700;
+      font-size: clamp(22px, 6vw, 28px);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+      margin-bottom: 12px;
     }
 
     .subtitle{
-      margin:8px 0 0;
-      color:var(--muted);
-      font-size: clamp(14px, 3vw, 16px);
-      line-height:1.7;
-    }
-
-    .divider{
-      height:1px;
-      background: linear-gradient(90deg, transparent, var(--line), transparent);
-      width: 100%;
-    }
-
-    main{
-      padding: 24px;
-      display:grid;
-      gap:20px;
-    }
-
-    .quote{
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:18px;
-      background: rgba(0,0,0,.25);
-      position:relative;
-      overflow:hidden;
-    }
-
-    .quote p{
-      margin:0;
-      font-size: 15px;
       color: var(--muted);
+      font-size: 15px;
       line-height: 1.8;
-      position:relative;
-      z-index:1;
-      text-align: justify;
     }
 
     .big{
-      display: inline-block;
-      font-weight: 600;
+      display: block;
+      margin-top: 8px;
       color: var(--accent);
-      margin-top: 4px;
+      font-weight: 600;
     }
 
-    .row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:16px;
-      align-items:center;
-      justify-content:space-between;
+    .divider{
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 80%, transparent);
+    }
+
+    main{
+      padding: 28px;
+    }
+
+    .quote{
+      background: rgba(0,0,0,0.2);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .quote p{
+      color: var(--muted);
+      font-size: 14px;
+      text-align: justify;
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .chips{
-      display:flex; 
-      flex-wrap:wrap; 
-      gap:8px; 
-      align-items:center;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .chip{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      color: var(--muted);
-      padding:6px 12px;
-      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 100px;
       font-size: 12px;
-      white-space: nowrap;
+      color: var(--muted2);
     }
-    
-    /* Header specific chips adjustment */
-    header .chips {
-      align-self: flex-start;
-      margin-top: 4px;
+
+    .chip.status {
+      color: #ffb4b4;
+      background: rgba(255, 100, 100, 0.08);
+      border-color: rgba(255, 100, 100, 0.15);
     }
 
     .actions{
-      display:flex;
-      gap:10px;
-      align-items:center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
 
     .btn{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
+      height: 52px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
       color: var(--fg);
-      padding:12px 16px; /* Larger hit area for touch */
-      border-radius: 14px;
+      border-radius: 16px;
       font-size: 14px;
-      font-weight: 500;
-      cursor:pointer;
-      transition: all .2s cubic-bezier(0.2, 0.8, 0.2, 1);
-      display: inline-flex;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 44px; /* Apple Human Interface Guidelines minimum */
+      transition: all 0.2s ease;
     }
 
-    .btn:active{transform: scale(0.96); background: rgba(255,255,255,.08);}
+    .btn:active {
+      transform: scale(0.97);
+      background: rgba(255,255,255,0.1);
+    }
 
-    .btn.secondary{color:var(--muted)}
+    .btn.secondary{
+      background: transparent;
+      color: var(--muted);
+    }
 
     footer{
-      padding: 0 24px 24px;
-      color: var(--muted2);
+      padding: 0 28px 28px;
       font-size: 12px;
-      line-height: 1.6;
-      margin-top: auto;
+      color: var(--muted2);
+      text-align: center;
     }
 
-    .scanline{
-      position:absolute;
-      inset:0;
-      background: linear-gradient(180deg, transparent, rgba(255,255,255,.04), transparent);
-      transform: translateY(-120%);
-      animation: scan 8s linear infinite;
-      pointer-events:none;
-      opacity:.3;
-      z-index: 2;
+    /* بهینه‌سازی برای موبایل‌های بسیار کوچک */
+    @media (max-width: 380px) {
+      header, main { padding: 20px; }
+      .actions { grid-template-columns: 1fr; }
+      .badge { width: 40px; height: 40px; }
     }
 
-    @keyframes scan{
-      0%{transform: translateY(-120%)}
-      100%{transform: translateY(120%)}
+    /* انیمیشن اسکن لاین برای حس مدرن */
+    .scanline {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      animation: scan 4s linear infinite;
+      z-index: 5;
     }
 
-    /* Mobile specific optimizations */
-    @media (max-width: 600px) {
-      .wrap { padding: 12px; }
-      .card { border-radius: 20px; }
-      header { padding: 20px 18px; flex-direction: column; gap: 16px; }
-      header .chips { width: 100%; margin-top: 0; }
-      .mark { width: 100%; }
-      main { padding: 20px 18px; }
-      .row { flex-direction: column; align-items: stretch; gap: 20px; }
-      .actions { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-      .chips { justify-content: flex-start; }
-      footer { padding: 0 18px 20px; text-align: center; }
-    }
-
-    /* Extra small screens (Fold, SE) */
-    @media (max-width: 360px) {
-      h1 { font-size: 22px; }
-      .actions { grid-template-columns: 1fr; } /* Stack buttons fully */
-      .badge { width: 38px; height: 38px; }
+    @keyframes scan {
+      0% { top: -10%; }
+      100% { top: 110%; }
     }
   </style>
 </head>
 <body>
-  <div class="grain" aria-hidden="true"></div>
+  <div class="grain"></div>
 
   <div class="wrap">
-    <article class="card" role="article" aria-labelledby="title" aria-describedby="desc">
-      <div class="scanline" aria-hidden="true"></div>
+    <article class="card">
+      <div class="scanline"></div>
 
       <header>
         <div class="mark">
-          <div class="badge" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7.5 10.2V7.7c0-.9.7-1.7 1.6-1.7.9 0 1.6.8 1.6 1.7v2.4" stroke="white" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M10.7 10.2V7.1c0-.9.7-1.7 1.6-1.7.9 0 1.6.8 1.6 1.7v3.1" stroke="white" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M13.9 10.2V7.6c0-.9.7-1.7 1.6-1.7.9 0 1.6.8 1.6 1.7v5.2" stroke="white" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M7.5 10.2v6.2c0 1.7 1.4 3.1 3.1 3.1h3.8c1.5 0 2.8-1 3.1-2.4l.6-3.1c.2-1-.5-1.9-1.5-2.1-.8-.1-1.5.3-1.9.9" stroke="white" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round"/>
+          <div class="badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
             </svg>
           </div>
 
-          <div class="title">
-            <h1 id="title">فعلاً با توجه به شرایط، از دسترس خارج شد</h1>
-            <p class="subtitle" id="desc">
+          <div class="title-area">
+            <h1>فعلاً با توجه به شرایط، از دسترس خارج شد</h1>
+            <p class="subtitle">
               بعضی وقت‌ها بهترین کاری که میشه کرد اینه که صدا رو قطع نکنیم—فقط موقتاً سکوت کنیم.
               <span class="big">به امید روزای بهتر.</span>
             </p>
           </div>
         </div>
-
-        <div class="chips" aria-label="وضعیت">
-          <span class="chip" style="background: rgba(255,50,50,0.1); border-color: rgba(255,50,50,0.2); color: #ffadad;">وضعیت: توقف موقت</span>
-          <span class="chip" id="timeChip">--:--</span>
-        </div>
       </header>
 
-      <div class="divider" aria-hidden="true"></div>
+      <div class="divider"></div>
 
       <main>
-        <section class="quote" aria-label="پیام">
+        <div class="status-row">
+          <div class="chips">
+            <span class="chip status">توقف موقت</span>
+            <span class="chip" id="timeChip">--:--</span>
+          </div>
+          <div class="chips">
+            <span class="chip">#همدلی</span>
+            <span class="chip">#امید</span>
+          </div>
+        </div>
+
+        <section class="quote">
           <p>
-            این سامانه موقتابرای تعمیرات و شرایط خاص از دسترس خارج شد
-            <br />
-            وقتی دوباره شرایط بهتر بشه، برمی‌گردیم—با صدای بلندتر، با دقت بیشتر.
+            این سامانه موقتاً برای تعمیرات و شرایط خاص از دسترس خارج شده است. وقتی دوباره شرایط بهتر بشه، برمی‌گردیم—با صدای بلندتر و دقتی بیشتر.
           </p>
         </section>
 
-        <div class="row">
-          <div class="chips" aria-label="تگ‌ها">
-            <span class="chip">آگاهی</span>
-            <span class="chip">همدلی</span>
-            <span class="chip">امید</span>
-          </div>
-
-          <div class="actions">
-            <button class="btn" type="button" id="copyBtn">کپی متن پیام</button>
-            <button class="btn secondary" type="button" id="refreshBtn">تلاش دوباره</button>
-          </div>
+        <div class="actions">
+          <button class="btn" id="copyBtn">کپی پیام</button>
+          <button class="btn secondary" id="refreshBtn">تلاش مجدد</button>
         </div>
       </main>
 
       <footer>
-        <div>
-          اگر این صفحه را می‌بینی، یعنی صاحب سایت تصمیم گرفته برای مدتی مسئولانه توقف کند.
-        </div>
+        این توقف یک تصمیم مسئولانه است. سپاس از شکیبایی شما.
       </footer>
     </article>
   </div>
 
   <script>
-    // Time update
-    (function(){
-      try {
-        const d = new Date();
-        const pad = (n)=> String(n).padStart(2,'0');
-        // Simple time format for mobile spacing
-        document.getElementById('timeChip').textContent = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
-      } catch(e) {}
-    })();
+    // بروزرسانی زمان
+    function updateTime() {
+      const now = new Date();
+      const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+      document.getElementById('timeChip').textContent = timeStr;
+    }
+    updateTime();
+    setInterval(updateTime, 30000);
 
-    // Copy functionality
-    const btn = document.getElementById('copyBtn');
-    btn.addEventListener('click', async () => {
-      const text = `فعلاً با توجه به شرایط، از دسترس خارج شد.\nبه امید روزای بهتر.`;
-      
-      // Feedback UI
-      const originalText = btn.textContent;
-      const setBtnState = (txt, active) => {
-        btn.textContent = txt;
-        if(active) btn.style.borderColor = 'rgba(255,255,255,0.4)';
-        else btn.style.borderColor = '';
-      };
-
+    // کپی متن
+    const copyBtn = document.getElementById('copyBtn');
+    copyBtn.addEventListener('click', async () => {
+      const text = "فعلاً با توجه به شرایط، از دسترس خارج شد. به امید روزای بهتر.";
       try {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          await navigator.clipboard.writeText(text);
-        } else {
-          // IOS/Old browser fallback
-          const ta = document.createElement('textarea');
-          ta.value = text;
-          ta.style.position = 'fixed';
-          ta.style.opacity = '0';
-          document.body.appendChild(ta);
-          ta.focus();
-          ta.select();
-          document.execCommand('copy');
-          document.body.removeChild(ta);
-        }
-        setBtnState('کپی شد ✓', true);
+        await navigator.clipboard.writeText(text);
+        copyBtn.textContent = "کپی شد ✓";
+        copyBtn.style.background = "rgba(100, 255, 100, 0.1)";
+        setTimeout(() => {
+          copyBtn.textContent = "کپی پیام";
+          copyBtn.style.background = "";
+        }, 2000);
       } catch (err) {
-        setBtnState('خطا', false);
+        // Fallback
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        copyBtn.textContent = "کپی شد ✓";
+        setTimeout(() => copyBtn.textContent = "کپی پیام", 2000);
       }
-      
-      setTimeout(() => setBtnState('کپی متن پیام', false), 2000);
     });
 
+    // رفرش
     document.getElementById('refreshBtn').addEventListener('click', () => {
-      const btn = document.getElementById('refreshBtn');
-      btn.textContent = 'شکیبایی...';
-      setTimeout(() => location.reload(), 500);
+      document.getElementById('refreshBtn').textContent = "...";
+      setTimeout(() => location.reload(), 600);
     });
   </script>
 </body>
